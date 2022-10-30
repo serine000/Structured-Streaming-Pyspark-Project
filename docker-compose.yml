@@ -1,11 +1,43 @@
 version: '3.8'
 services:
+
+  spark_master:
+    image: spark_master
+    ports:
+     - 4040:8080
+     - 7077:7077
+    volumes:
+     - shared-pyspark-workspace:./opt/shared_workspace
+    networks:
+      - local_network
+
+  spark_worker_1:
+    image: spark_worker
+    ports:
+     - 4041:8081
+    volumes:
+     - shared-pyspark-workspace:./opt/shared_workspace
+    networks:
+      - local_network
+
+  spark_worker_2:
+    image: spark_worker
+    ports:
+     - 4041:8081
+    volumes:
+     - shared-pyspark-workspace:./opt/shared_workspace
+    networks:
+      - local_network
+
+
   mongo_db1: 
     image: mongo
     ports:
       - 27017:27017
     volumes:
       - mongo-data1:/data/db
+    networks:
+      - local_network
 
   mongo_db2: 
     image: mongo
@@ -13,6 +45,8 @@ services:
       - 27018:27017
     volumes:
       - mongo-data2:/data/db
+    networks:
+      - local_network
 
   mongo_db3: 
     image: mongo
@@ -20,7 +54,16 @@ services:
       - 27019:27017
     volumes:
       - mongo-data3:/data/db
+    networks:
+      - local_network
+
+networks:
+  local_network:
+
 volumes:
+  shared-pyspark-workspace:
+    name: "hadoop-distributed-file-system"
+    driver: local
   mongo-data1:
   mongo-data2:
   mongo-data3:
