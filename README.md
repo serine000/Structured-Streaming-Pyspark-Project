@@ -2,9 +2,9 @@
 
 ## **Quick description**: 
 
-  > A more detailed project explination is available in my medium **[article](https://www.mongodb.com/blog/post/getting-started-with-mongodb-pyspark-and-jupyter-notebook)**
+  > A more detailed explination on this project and its components is available in my medium **[article](https://www.mongodb.com/blog/post/getting-started-with-mongodb-pyspark-and-jupyter-notebook)**
 
-  This project links together a **kafka cluster** (our source, where data gets deposited from a data producer), a **Pyspark cluster** (where we process the data coming from our source) and a **MongoDB cluster** (our sink, where the results of our processing gets stored).
+  This project links together a **kafka cluster** (our source, where data gets deposited from a data producer), a **Pyspark cluster** (where we process the data coming from our source) and a **MongoDB cluster** (our sink, where the results of our processing gets stored). All done **locally on your machine**
 
 <p align="center"><img src="extra_images/overall_setup.png"></p>
 
@@ -21,6 +21,34 @@ The cluster will be represented by docker containers.
   - All the containers will belong to the same user-defined docker network so that they can communicate 
 
 -----------
+## **Prerequisites**:
+Make sure to have [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/) downloaded on your machine.
+
+All other requirements will be downloaded inside of our containers.
+
+## **Steps to follow**
+
+1. Download the source code or clone the repository.
+2. Move to the appBuild directory.
+
+```bash
+cd appBuild
+```
+
+3. Build up the images;
+
+```bash
+chmod +x build.sh ; ./build.sh
+```
+
+4. Start the cluster;
+
+```bash
+docker-compose up
+```
+----
+
+
 
   
   
