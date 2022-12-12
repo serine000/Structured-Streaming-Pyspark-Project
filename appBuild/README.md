@@ -1,8 +1,5 @@
 # Building the Spark Cluster 
-As we know, we can stack several docker images one over the other (we basically build a stack of images).
-So the way our Spark Cluster is set up is using these four images:
-(Read this list from bottom to top)
-
+The Spark Cluster will be composed of these (stacked) images, starting from the cluster_base image all the way up to spark_worker.
 
 - spark_worker
 - spark_master
