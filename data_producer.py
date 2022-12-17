@@ -8,7 +8,7 @@ from kafka import KafkaProducer
 
 
 # ENV variables
-kafka_topic = os.getenv('KAFKA_TOPIC')#'first_python_topic'
+kafka_topic = os.getenv('KAFKA_TOPIC') #'first_python_topic'
 
 
 # Serialize message as JSON
