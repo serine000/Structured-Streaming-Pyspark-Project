@@ -46,7 +46,7 @@ chmod +x build.sh ; ./build.sh
 4. Start the cluster;
 
 ```bash
-docker-compose up
+docker-compose up -d
 ```
 ----
 
