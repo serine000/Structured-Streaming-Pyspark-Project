@@ -37,13 +37,13 @@ All other requirements will be downloaded inside of our containers.
 cd appBuild
 ```
 
-3. Build up the images;
+3. Build up the Spark images;
 
 ```bash
 chmod +x build.sh ; ./build.sh
 ```
 
-4. Start the cluster;
+4. Start the clusters;
 
 ```bash
 docker-compose up -d
