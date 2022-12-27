@@ -1,6 +1,7 @@
 version: '3.8'
 services:
 
+  # Spark master node
   spark_master:
     image: spark_master
     ports:
@@ -11,6 +12,7 @@ services:
     networks:
       - local_network
 
+  # Spark worker node 1
   spark_worker_1:
     image: spark_worker
     ports:
@@ -20,6 +22,7 @@ services:
     networks:
       - local_network
 
+  # spark worker node 2
   spark_worker_2:
     image: spark_worker
     ports:
@@ -29,7 +32,7 @@ services:
     networks:
       - local_network
 
-
+  # MongoDB Replica set node 1
   mongo_db1: 
     image: mongo
     ports:
@@ -38,7 +41,16 @@ services:
       - mongo-data1:/data/db
     networks:
       - local_network
+    depends_on:
+      - mongo2
+      - mongo3
+    links:
+      - mongo2
+      - mongo3
+    restart: always
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs" ]
 
+  # MongoDB Replica set node 2
   mongo_db2: 
     image: mongo
     ports:
@@ -47,7 +59,10 @@ services:
       - mongo-data2:/data/db
     networks:
       - local_network
+    restart: always
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs" ]
 
+  # MongoDB Replica set node 3
   mongo_db3: 
     image: mongo
     ports:
@@ -56,7 +71,10 @@ services:
       - mongo-data3:/data/db
     networks:
       - local_network
+    restart: always
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs" ]
   
+  # zookeeper node for kafka cluster
   zookeeper:
     image: wurstmeister/zookeeper
     container_name: zookeeper
@@ -68,6 +86,7 @@ services:
     networks:
       - local_network
   
+  # Kafka node for kafka cluster
   kafka:
     image: wurstmeister/kafka
     container_name: kafka
@@ -84,6 +103,7 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL_SAME_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CREATE_TOPICS: "first_python_topic"
       KAFKA_LOG_RETENTION_MS: 180000
     restart: always
     networks:
