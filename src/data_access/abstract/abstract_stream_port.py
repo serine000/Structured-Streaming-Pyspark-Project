@@ -1,13 +1,13 @@
-from abc import ABC, abstractclassmethod
+from abc import ABC, abstractmethod
 
-class AbstractStreamPort(ABC):
-    """
-    Abstract base class for creating stream ports.
-    """
 
-    @classmethod
-    def create_stream_port(self, *args):
+class StreamPort(ABC):
+    @abstractmethod
+    def create_stream(self, *args):
         """
-        Creates a stream port.
+        Create a stream sink.
+
+        This method is meant to be overridden by
+        subclasses to create a stream sink.
         """
         pass

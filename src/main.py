@@ -1,11 +1,16 @@
-from conf.settings import settings
+from pyspark.sql import SparkSession
+
+from services.create_stream_ports import fetch_stream_sink, fetch_stream_source
+
 
 def main():
-    source_stream_port = settings.get('input_stream')
-    chosen_input_stream = settings.get(source_stream_port)
+    spark_session = SparkSession.builder.appName("KafkaStreamExample").getOrCreate()
+    print(spark_session)
+    input_stream_source = fetch_stream_source(spark_session)
+    # output_stream_source = fetch_stream_sink()
 
-    input_stream = chosen_input_stream.create_stream_port()
-    print(input_stream)
+    print(input_stream_source)
+
 
 if __name__ == "__main__":
     main()
