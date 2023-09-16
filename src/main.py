@@ -1,6 +1,7 @@
 from pyspark.sql import SparkSession
 
 from services.create_stream_ports import fetch_stream_sink, fetch_stream_source
+from services.spark_setup import SparkInitializer
 
 
 def main():

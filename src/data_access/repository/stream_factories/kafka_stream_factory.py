@@ -9,8 +9,14 @@ from data_access.repository.stream_ports.stream_sources.kafka_source_port import
 
 
 class KafkaStreamFactory(StreamFactory):
-    def fetch_stream_source(self):
+    def fetch_stream_source(self) -> KafkaSourcePort:
+        """
+        Returns an instance of the KafkaSourcePort class.
+        """
         return KafkaSourcePort()
 
-    def fetch_stream_sink(self):
+    def fetch_stream_sink(self) -> KafkaSinkPort:
+        """
+        Returns an instance of the KafkaSinkPort class.
+        """
         return KafkaSinkPort()
