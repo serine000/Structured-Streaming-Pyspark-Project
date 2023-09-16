@@ -1,5 +1,6 @@
 import pytest
 from pyspark.sql import SparkSession
+from src.services.spark_setup import SparkInitializer
 
 
 class TestSparkInitializer:
