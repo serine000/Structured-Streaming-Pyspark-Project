@@ -7,10 +7,13 @@ class SparkInitializer:
     and provides access to a SparkSession object in PySpark.
     """
 
-    __instance = None  # Singleton instance
+    __instance = None
 
     def __new__(
-        cls, app_name: str = "MySparkApp", master: str = "local[*]", config: dict = None
+        cls,
+        app_name: str = "MySparkApp",
+        master: str = "local[*]",
+        config: dict = None,
     ):
         """
         Creates a new instance of the class if it doesn't already exist.
@@ -24,17 +27,20 @@ class SparkInitializer:
         Returns:
             SparkInitializer: The singleton instance of the class.
         """
-        if not isinstance(app_name, str) or not isinstance(master, str):
-            raise ValueError("app_name and master must be non-empty strings")
-        if not app_name or not master:
-            raise ValueError("app_name and master cannot be empty strings")
-        if cls._instance is None:
-            cls._instance = super(SparkInitializer, cls).__new__(cls)
-            cls._instance = cls.init_spark_session(app_name, master, config)
-        return cls._instance
+        if cls.__instance is None:
+            cls.__instance = super(SparkInitializer, cls).__new__(cls)
+        return cls.__instance
+
+    def __init__(
+        self,
+        app_name: str = "MySparkApp",
+        master: str = "local[*]",
+        config: dict = None,
+    ):
+        self._spark_session = self.init_spark_session(app_name, master, config)
 
     @staticmethod
-    def init_spark_session(app_name: str, master: str, config):
+    def init_spark_session(app_name: str, master: str, config: dict = None):
         """
         Initializes the SparkSession object with the provided application name and master URL.
         Allows additional configuration options to be passed through the `config` parameter.
@@ -48,9 +54,6 @@ class SparkInitializer:
             SparkSession: The initialized SparkSession object.
         """
 
-        if not isinstance(config, dict):
-            raise ValueError("config parameter must be a dictionary")
-
         spark = SparkSession.builder.appName(app_name).master(master)
 
         if config:
@@ -60,11 +63,11 @@ class SparkInitializer:
         return spark.getOrCreate()
 
     @property
-    def get_spark_session(self):
+    def spark_session(self):
         """
         Returns the SparkSession object.
 
         Returns:
             SparkSession: The SparkSession object.
         """
-        return self._instance
+        return self._spark_session
