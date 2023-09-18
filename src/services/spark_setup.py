@@ -7,7 +7,7 @@ class SparkInitializer:
     and provides access to a SparkSession object in PySpark.
     """
 
-    _instance = None  # Singleton instance
+    __instance = None  # Singleton instance
 
     def __new__(
         cls, app_name: str = "MySparkApp", master: str = "local[*]", config: dict = None
@@ -24,9 +24,13 @@ class SparkInitializer:
         Returns:
             SparkInitializer: The singleton instance of the class.
         """
+        if not isinstance(app_name, str) or not isinstance(master, str):
+            raise ValueError("app_name and master must be non-empty strings")
+        if not app_name or not master:
+            raise ValueError("app_name and master cannot be empty strings")
         if cls._instance is None:
-            cls._instance = super().__new__(cls)
-            cls._instance._spark = cls.init_spark_session(app_name, master, config)
+            cls._instance = super(SparkInitializer, cls).__new__(cls)
+            cls._instance = cls.init_spark_session(app_name, master, config)
         return cls._instance
 
     @staticmethod
@@ -63,4 +67,4 @@ class SparkInitializer:
         Returns:
             SparkSession: The SparkSession object.
         """
-        return self._spark
+        return self._instance
