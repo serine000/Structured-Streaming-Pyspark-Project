@@ -27,6 +27,11 @@ class SparkInitializer:
         Returns:
             SparkInitializer: The singleton instance of the class.
         """
+        if not isinstance(app_name, str) or not isinstance(master, str):
+            raise ValueError("app_name and master must be non-empty strings")
+        if not app_name or not master:
+            raise ValueError("app_name and master cannot be empty strings")
+
         if cls.__instance is None:
             cls.__instance = super(SparkInitializer, cls).__new__(cls)
         return cls.__instance
@@ -57,6 +62,8 @@ class SparkInitializer:
         spark = SparkSession.builder.appName(app_name).master(master)
 
         if config:
+            if not isinstance(config, dict):
+                raise ValueError("config parameter must be a dictionary")
             for key, value in config.items():
                 spark = spark.config(key, value)
 

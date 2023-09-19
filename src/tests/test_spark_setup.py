@@ -95,141 +95,70 @@ class TestSparkInitializer:
         with pytest.raises(ValueError):
             SparkInitializer(config="invalid_config")
 
-    # # Create a new instance of SparkInitializer with empty app_name and master arguments
-    # def test_empty_app_name_and_master(self):
-    #     with pytest.raises(ValueError):
-    #         SparkInitializer("", "")
+    # Create a new instance of SparkInitializer with empty app_name and master arguments
+    def test_empty_app_name_and_master(self):
+        with pytest.raises(ValueError):
+            SparkInitializer("", "")
 
-    # # Create a new instance of SparkInitializer with non-string app_name and master arguments
-    # def test_create_instance_with_non_string_arguments(self):
-    #     with pytest.raises(ValueError):
-    #         SparkInitializer(123, "local[*]")
-    #     with pytest.raises(ValueError):
-    #         SparkInitializer("MySparkApp", 123)
+    # Create a new instance of SparkInitializer with non-string app_name and master arguments
+    def test_create_instance_with_non_string_arguments(self):
+        with pytest.raises(ValueError):
+            SparkInitializer(123, "local[*]")
+        with pytest.raises(ValueError):
+            SparkInitializer("MySparkApp", 123)
 
-    # # Create a new instance of SparkInitializer with non-dictionary config argument
-    # def test_create_instance_with_non_dictionary_config(self):
-    #     with pytest.raises(ValueError):
-    #         SparkInitializer(config="not a dictionary")
+    # Create a new instance of SparkInitializer with non-dictionary config argument
+    def test_create_instance_with_non_dictionary_config(self):
+        with pytest.raises(ValueError):
+            SparkInitializer(config="not a dictionary")
 
-    # # Access the SparkSession object using get_spark_session property
-    # def test_access_spark_session(self):
-    #     # Create an instance of SparkInitializer
-    #     spark_initializer = SparkInitializer()
+    # Access the SparkSession object using get_spark_session property
+    def test_access_spark_session(self):
+        # Create an instance of SparkInitializer
+        spark_initializer = SparkInitializer()
 
-    #     # Access the SparkSession object using get_spark_session property
-    #     spark_session = spark_initializer.get_spark_session
+        # Access the SparkSession object using get_spark_session property
+        spark_session = spark_initializer.spark_session
 
-    #     # Check if the returned object is an instance of SparkSession
-    #     assert isinstance(spark_session, SparkSession)
+        # Check if the returned object is an instance of SparkSession
+        assert isinstance(spark_session, SparkSession)
 
-    #     # Check if the SparkSession object is not None
-    #     assert spark_session is not None
+        # Check if the SparkSession object is not None
+        assert spark_session is not None
 
-    # # Create a new instance of SparkInitializer with custom arguments
-    # def test_create_new_instance_with_custom_arguments(self):
-    #     # Create a new instance of SparkInitializer with custom arguments
-    #     spark_initializer = SparkInitializer(
-    #         app_name="MyApp", master="local[2]", config={"key": "value"}
-    #     )
+    # Create multiple instances of SparkInitializer and ensure they are the same object
+    def test_multiple_instances_same_object(self):
+        spark_init_1 = SparkInitializer()
+        spark_init_2 = SparkInitializer()
+        assert spark_init_1.spark_session == spark_init_2.spark_session
 
-    #     # Check if the instance is of type SparkInitializer
-    #     assert isinstance(spark_initializer, SparkInitializer)
+    # Check if SparkSession is a singleton object
+    def test_spark_session_singleton(self):
+        # Create two instances of SparkInitializer
+        spark_init_1 = SparkInitializer()
+        spark_init_2 = SparkInitializer()
 
-    #     # Check if the SparkSession object is not None
-    #     assert spark_initializer.get_spark_session is not None
+        # Check if both instances refer to the same SparkSession object
+        assert spark_init_1.spark_session == spark_init_2.spark_session
 
-    #     # Check if the SparkSession object is of type SparkSession
-    #     assert isinstance(spark_initializer.get_spark_session, SparkSession)
+    # Create a new instance of SparkInitializer with custom configuration options
+    def test_create_instance_with_custom_config(self):
+        config = {"spark.executor.memory": "2g", "spark.executor.cores": "4"}
+        spark_initializer = SparkInitializer("MyApp", "local[*]", config)
+        spark_session = spark_initializer.spark_session
 
-    #     # Check if the SparkSession object has the correct app name
-    #     assert spark_initializer.get_spark_session.appName == "MyApp"
+        assert spark_session.conf.get("spark.app.name") == "MyApp"
+        assert spark_session.conf.get("spark.master") == "local[*]"
+        assert spark_session.conf.get("spark.executor.memory") == "2g"
+        assert spark_session.conf.get("spark.executor.cores") == "4"
 
-    #     # Check if the SparkSession object has the correct master URL
-    #     assert spark_initializer.get_spark_session.master == "local[2]"
+    # Create a new instance of SparkInitializer with a SparkSession already initialized
+    def test_create_instance_with_initialized_spark_session(self):
+        # Create a SparkSession object
+        spark = SparkSession.builder.appName("TestApp").master("local[*]").getOrCreate()
 
-    #     # Check if the SparkSession object has the correct configuration
-    #     assert spark_initializer.get_spark_session.conf.get("key") == "value"
+        # Create an instance of SparkInitializer
+        spark_initializer = SparkInitializer()
 
-    # # Create a new instance of SparkInitializer with a non-existent configuration option
-    # def test_new_instance_with_nonexistent_config_option(self):
-    #     with pytest.raises(ValueError):
-    #         SparkInitializer(config={"nonexistent_option": "value"})
-
-    # # Create multiple instances of SparkInitializer and ensure they are the same object
-    # def test_multiple_instances_same_object(self):
-    #     spark_init_1 = SparkInitializer()
-    #     spark_init_2 = SparkInitializer()
-    #     assert spark_init_1.get_spark_session == spark_init_2.get_spark_session
-
-    # # Check if SparkSession is a singleton object
-    # def test_spark_session_singleton(self):
-    #     # Create two instances of SparkInitializer
-    #     spark_init_1 = SparkInitializer()
-    #     spark_init_2 = SparkInitializer()
-
-    #     # Check if both instances refer to the same SparkSession object
-    #     assert spark_init_1.get_spark_session == spark_init_2.get_spark_session
-
-    # # Check if SparkSession is created only once
-    # def test_spark_session_created_once(self):
-    #     # Create two instances of SparkInitializer
-    #     spark_init_1 = SparkInitializer()
-    #     spark_init_2 = SparkInitializer()
-
-    #     # Check if the SparkSession objects are the same
-    #     assert spark_init_1.get_spark_session == spark_init_2.get_spark_session
-
-    # # Create a new instance of SparkInitializer with custom configuration options
-    # def test_create_instance_with_custom_config(self):
-    #     config = {"spark.executor.memory": "2g", "spark.executor.cores": "4"}
-    #     spark_initializer = SparkInitializer("MyApp", "local[*]", config)
-    #     spark_session = spark_initializer.get_spark_session
-
-    #     assert spark_session.appName == "MyApp"
-    #     assert spark_session.master == "local[*]"
-    #     assert spark_session.conf.get("spark.executor.memory") == "2g"
-    #     assert spark_session.conf.get("spark.executor.cores") == "4"
-
-    # # Initialize SparkSession with additional configuration options
-    # def test_initialize_spark_session_with_config(self):
-    #     config = {"spark.executor.memory": "2g", "spark.executor.cores": "4"}
-    #     spark_initializer = SparkInitializer(config=config)
-    #     spark_session = spark_initializer.get_spark_session
-    #     assert spark_session.conf.get("spark.executor.memory") == "2g"
-    #     assert spark_session.conf.get("spark.executor.cores") == "4"
-
-    # # Create a new instance of SparkInitializer with a SparkSession already initialized
-    # def test_create_instance_with_initialized_spark_session(self):
-    #     # Create a SparkSession object
-    #     spark = SparkSession.builder.appName("TestApp").master("local[*]").getOrCreate()
-
-    #     # Create an instance of SparkInitializer
-    #     spark_initializer = SparkInitializer()
-
-    #     # Check if the SparkSession object is the same as the one in SparkInitializer
-    #     assert spark_initializer.get_spark_session == spark
-
-    # # Check if SparkSession is initialized with correct parameters
-    # def test_spark_session_initialization(self):
-    #     # Create an instance of SparkInitializer
-    #     spark_initializer = SparkInitializer(
-    #         app_name="TestApp",
-    #         master="local[2]",
-    #         config={"spark.executor.memory": "2g"},
-    #     )
-
-    #     # Get the SparkSession object
-    #     spark_session = spark_initializer.get_spark_session
-
-    #     # Check if the SparkSession object is not None
-    #     assert spark_session is not None
-
-    #     # Check if the SparkSession object has the correct application name
-    #     assert spark_session.sparkContext.appName == "TestApp"
-
-    #     # Check if the SparkSession object has the correct master URL
-    #     assert spark_session.sparkContext.master == "local[2]"
-
-    #     # Check if the SparkSession object has the correct configuration
-    #     assert spark_session.conf.get("spark.executor.memory") == "2g"
+        # Check if the SparkSession object is the same as the one in SparkInitializer
+        assert spark_initializer.spark_session == spark
