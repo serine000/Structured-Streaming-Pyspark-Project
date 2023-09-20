@@ -2,9 +2,9 @@ FROM cluster_base
 # -- Now above the cluster_base (OS & python) image we add another image/building block for our Spark cluster
 # -- We add the Spark & Hadoop elements
 
-ARG spark_version=3.3.1
-ARG hadoop_version=3
-    
+ARG spark_version=3.5.0
+ARG hadoop_version=3.3.6
+
 # -- In the below we download the spark-hadoop package (it's compressed) into spark.tgz
 # -- We them extract it and place it inside /usr/bin/ inside our container's file directory
 # -- We also make an extra file called logs inside our spark-hadoop directory
