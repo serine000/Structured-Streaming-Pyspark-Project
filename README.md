@@ -31,21 +31,26 @@ All other requirements will be downloaded inside of our containers.
 ## **Steps to follow**
 
 1. Download the source code or clone the repository.
-2. Move to the appBuild directory.
 
-```bash
-cd appBuild
-```
-
-3. Build up the Spark images;
+2. Give permissions to the bash file and then build up the Spark images;
 
 ```bash
 chmod +x build.sh ; ./build.sh
 ```
 
-4. Start the clusters;
+3. Start the clusters;
 
 ```bash
 docker-compose up -d
 ```
 ----
+
+## My To do:
+- Connect kafka from both sink and source ports to the Spark session.
+- Connect MongoDB from both sink and source ports to the Spark session.
+- Setup the dockerfiles and containers for each service.
+- Setup the docker-compose.yml file.
+- Ensure proper documentation for each file and README.
+- Adding tests along the way.
+- Add a way to populate kafka and mongo if used as sources.
+- Create necessary partitions and collections on each stream option.
