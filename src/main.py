@@ -5,8 +5,7 @@ from services.spark_setup import SparkInitializer
 
 
 def main():
-    spark_session = SparkSession.builder.appName("KafkaStreamExample").getOrCreate()
-    print(spark_session)
+    spark_session = SparkInitializer()
     input_stream_source = fetch_stream_source(spark_session)
     # output_stream_source = fetch_stream_sink()
 

@@ -1,4 +1,4 @@
-from data_access.repository.stream_factories.kafka_stream_factory import (
+from data_access.repository.stream_factories.kafka_stream import (
     KafkaStreamFactory,
 )
 
