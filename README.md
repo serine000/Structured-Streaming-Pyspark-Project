@@ -54,3 +54,5 @@ docker-compose up -d
 - Adding tests along the way.
 - Add a way to populate kafka and mongo if used as sources.
 - Create necessary partitions and collections on each stream option.
+
+
