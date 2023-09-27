@@ -1,0 +1,31 @@
+version: "3.6"
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    ports:
+      - 2181:2181
+    environment:
+      ZOOKEEPER_CLIENT: 2181
+    restart: always
+    networks:
+      - home_network
+
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    ports:
+      - 29092:29092
+    volumes:
+      - kafka_volume:/kafka
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_LISTENERS:
+      KAFKA_ZOOKEEPER_CONNECT:
+      KAFKA_ADVERTISED_LISTENERS:
+      KAFKA_LISTENERS_SECURITY_PROTOCOL_MAP:
+      KAFKA_INTER_BROKER_LISTERNER_NAME:
+      KAFKA_OFFSET_TOPIC_REPLICATION_FACTOR:
+
+
