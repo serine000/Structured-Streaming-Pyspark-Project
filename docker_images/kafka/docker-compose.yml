@@ -27,5 +27,26 @@ services:
       KAFKA_LISTENERS_SECURITY_PROTOCOL_MAP:
       KAFKA_INTER_BROKER_LISTERNER_NAME:
       KAFKA_OFFSET_TOPIC_REPLICATION_FACTOR:
+      KAFKA_LOG_RETENTION_MS:
+      KAFKA_BACKGROUND_THREADS:
+      KAKFA_NUM_NETWORK_THREADS:
+      KAFKA_NUM_IO_THREADS:
+      ALLOW_PLAINTEXT_LISTENER:
+      KAFKA_MESSAGE_MAX_BYTES:
+      KAFKA_BATCH_SIZE:
+    restart: always
+    networks:
+      - home_network
+    depends_on:
+      - zookeeper
+
+  volumes:
+    kafka_volume:
+
+
+  networks:
+    home_network:
+      external:
+        name:
 
 
