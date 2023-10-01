@@ -7,8 +7,8 @@ conf_manager = ConfigurationManager()
 
 
 def fetch_stream_source(spark_session: SparkSession):
-    source_stream_port: str = conf_manager.get_regular_settings("input_stream")
-    chosen_input_stream: StreamFactory = conf_manager.get_regular_settings(
+    source_stream_port: str = conf_manager.get_general_configuration("input_stream")
+    chosen_input_stream: StreamFactory = conf_manager.get_general_configuration(
         source_stream_port
     )
 
@@ -20,8 +20,8 @@ def fetch_stream_source(spark_session: SparkSession):
 
 
 def fetch_stream_sink(spark_session: SparkSession):
-    sink_stream_port: str = conf_manager.get_regular_settings("output_stream")
-    chosen_output_stream: StreamFactory = conf_manager.get_regular_settings(
+    sink_stream_port: str = conf_manager.get_general_configuration("output_stream")
+    chosen_output_stream: StreamFactory = conf_manager.get_general_configuration(
         sink_stream_port
     )
 
