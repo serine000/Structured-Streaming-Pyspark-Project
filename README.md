@@ -30,6 +30,8 @@ All other requirements will be downloaded inside of our containers.
 
 ## **Steps to follow**
 
+1. The first step is to create the docker network that the spark container will operate within. To do so, run: `docker network create <YOUR_NETWORK_NAME>` using any network name you'd like by replacing the <YOUR_NETWORK_NAME> placeholder.
+
 1. Download the source code or clone the repository.
 
 2. Give permissions to the bash file and then build up the Spark images;

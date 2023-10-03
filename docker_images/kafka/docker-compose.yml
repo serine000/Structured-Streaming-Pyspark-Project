@@ -7,7 +7,7 @@ services:
     ports:
       - 2181:2181
     environment:
-      ZOOKEEPER_CLIENT: 2181
+      ZOOKEEPER_CLIENT_PORT: 2181
     restart: always
     networks:
       - home_network
@@ -26,7 +26,7 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: ${KAFKA_ZOOKEEPER_CONNECT}
       KAFKA_ADVERTISED_LISTENERS: ${KAFKA_ADVERTISED_LISTENERS}
       KAFKA_LISTENERS_SECURITY_PROTOCOL_MAP: ${KAFKA_LISTENERS_SECURITY_PROTOCOL_MAP}
-      KAFKA_INTER_BROKER_LISTERNER_NAME: ${KAFKA_INTER_BROKER_LISTERNER_NAME}
+      KAFKA_INTER_BROKER_LISTENER_NAME: ${KAFKA_INTER_BROKER_LISTENER_NAME} # Corrected the variable name
       KAFKA_LOG_RETENTION_HOURS: ${KAFKA_LOG_RETENTION_HOURS}
       ALLOW_PLAINTEXT_LISTENER: ${KAFKA_ALLOW_PLAINTEXT_LISTENER}
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: ${KAFKA_AUTO_CREATE_TOPICS_ENABLE}
@@ -36,11 +36,11 @@ services:
     depends_on:
       - zookeeper
 
-  volumes:
-    kafka_volume:
+volumes:
+  kafka_volume:
 
 
-  networks:
-    home_network:
-      external:
-        name: ${NETWORK_NAME}
+networks:
+  home_network:
+    external:
+      name: ${NETWORK_NAME}
