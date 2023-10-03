@@ -28,8 +28,7 @@ To create a kafka topic, follow these steps:
 1. Ensure that your kafka container is up and running by simply running `docker-compose up -d`
 2. Enter your container with `docker exec -it kafka bash`
 3. Navigate to where the kafka scripts are located using `cd/kafka_/bin`
-4. Run `kafka-topics.sh --create --topic TOPIC_NAME --partitions 1 --replication-factor 1 --zookeeper zookeeper:2181
-` to create your own topic inside the kafka container by inserting your topic's name in the place of TOPIC_NAME in the instruction above.
+4. Run `kafka-topics.sh --create --topic TOPIC_NAME --partitions 1 --replication-factor 1 --zookeeper zookeeper:2181` to create your own topic inside the kafka container by inserting your topic's name in the place of TOPIC_NAME in the instruction above.
 
 
 
