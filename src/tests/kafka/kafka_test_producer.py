@@ -29,8 +29,11 @@ def serializer(message):
     return json.dumps(message).encode("utf-8")
 
 
-priducer = KafkaProducer(bootstrap_servers=["kafka:9092"], value_serializer=serializer)
+producer = KafkaProducer(
+    bootstrap_servers=["localhost:29092"], value_serializer=serializer
+)
 
 if __name__ == "__main__":
     dummy_msg = generate_data()
-    priducer.send(kafka_topic, dummy_msg)
+    kafka_topic = "kafka_test_topic"
+    producer.send(kafka_topic, dummy_msg)
