@@ -1,8 +1,7 @@
 FROM spark-base
 
 ARG spark_worker_web_ui=8081
-# -- Set on which port to expose the spark worker nodes UI 
-# -- So for us we can access the spark worker nodes UI on port 8081
+# -- Set on which port to expose the spark worker node's UI 
 
 EXPOSE ${spark_worker_web_ui}
 

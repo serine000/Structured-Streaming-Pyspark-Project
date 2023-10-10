@@ -48,11 +48,5 @@ docker-compose up -d
 ----
 
 ## My To do:
-- Connect kafka from both sink and source ports to the Spark session.
-- Connect MongoDB from both sink and source ports to the Spark session.
-- Setup the dockerfiles and containers for each service.
-- Setup the docker-compose.yml file.
-- Ensure proper documentation for each file and README.
-- Adding tests along the way.
-- Add a way to populate kafka and mongo if used as sources.
-- Create necessary partitions and collections on each stream option.
+- Set up kafka as a stream source with spark.
+- Set up MongoDB as both a stream source & sink with spark.

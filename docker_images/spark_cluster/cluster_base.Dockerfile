@@ -9,7 +9,7 @@ RUN mkdir ${shared_workspace} && \
     ln -s /usr/bin/python3 /usr/bin/python && \
     rm -rf /var/lib/apt/lists/*
 
-# -- Copy all our entire local directory into our container's directory under the /opt/apps/ directory .
+# -- Copy all our entire local directory into our container's directory under the `/opt/apps/` directory .
 COPY . /opt/apps/
 ENV SHARED_WORKSPACE=${shared_workspace}
 
